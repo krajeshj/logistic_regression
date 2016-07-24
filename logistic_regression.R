@@ -38,7 +38,12 @@ labs <- attributes(NH11)$labels
 str(NH11$hypev) # check stucture of hypev
 levels(NH11$hypev) # check levels of hypev
 # collapse all missing values to NA
+summary(NH11$hypev)
+# what this does is that it collapeses the 
 NH11$hypev <- factor(NH11$hypev, levels=c("2 No", "1 Yes"))
+summary(NH11$hypev)
+summary(NH11)
+
 # run our regression model
 hyp.out <- glm(hypev~age_p+sex+sleep+bmi,
               data=NH11, family="binomial")
@@ -106,3 +111,37 @@ plot(allEffects(hyp.out))
 ##   Note that the data is not perfectly clean and ready to be modeled. You
 ##   will need to clean up at least some of the variables before fitting
 ##   the model.
+nh11_ear <- subset(NH11, select = c("everwrk", "age_p", "r_maritl"))
+summary(nh11_ear)
+str(nh11_ear)
+# There are NAs
+# Remove the records with NAs
+cleanedup_nh11_ear <- na.omit(nh11_ear)
+dim(nh11_ear)
+dim(cleanedup_nh11_ear)
+
+# Summarize
+# everwrk          age_p                                  r_maritl   
+# 1 Yes            :12153   Min.   :18.00   1 Married - spouse in household:5464  
+# 2 No             : 1887   1st Qu.:39.00   7 Never married                :2851  
+# 7 Refused        :   17   Median :60.00   4 Widowed                      :2525  
+# 8 Not ascertained:    0   Mean   :55.98   5 Divorced                     :1908  
+# 9 Don't know     :    8   3rd Qu.:73.00   8 Living with partner          : 601  
+# Max.   :85.00   6 Separated                    : 468  
+# (Other)                        : 248  
+
+
+###
+# Create a model
+###
+
+everwrk.out <- glm(everwrk~age_p+r_maritl,
+               data=cleanedup_nh11_ear, family="binomial")
+
+
+coef(summary(everwrk.out))
+######
+# Plot
+#######
+plot(allEffects(everwrk.out))
+data.frame(Effect("r_maritl",cleaned_up_nh11_ear))
