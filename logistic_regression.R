@@ -41,8 +41,9 @@ levels(NH11$hypev) # check levels of hypev
 summary(NH11$hypev)
 # what this does is that it collapeses the 
 NH11$hypev <- factor(NH11$hypev, levels=c("2 No", "1 Yes"))
+levels(NH11$hypev)
 summary(NH11$hypev)
-summary(NH11)
+#summary(NH11)
 
 # run our regression model
 hyp.out <- glm(hypev~age_p+sex+sleep+bmi,
@@ -113,12 +114,11 @@ plot(allEffects(hyp.out))
 ##   the model.
 nh11_ear <- subset(NH11, select = c("everwrk", "age_p", "r_maritl"))
 summary(nh11_ear)
-str(nh11_ear)
+levels(nh11_ear)
 # There are NAs
 # Remove the records with NAs
 cleanedup_nh11_ear <- na.omit(nh11_ear)
-dim(nh11_ear)
-dim(cleanedup_nh11_ear)
+levels(cleaned_up_nh11_ear$everwrk)
 
 # Summarize
 # everwrk          age_p                                  r_maritl   
@@ -144,4 +144,4 @@ coef(summary(everwrk.out))
 # Plot
 #######
 plot(allEffects(everwrk.out))
-data.frame(Effect("r_maritl",cleaned_up_nh11_ear))
+ 
