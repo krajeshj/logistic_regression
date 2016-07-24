@@ -114,11 +114,11 @@ plot(allEffects(hyp.out))
 ##   the model.
 nh11_ear <- subset(NH11, select = c("everwrk", "age_p", "r_maritl"))
 summary(nh11_ear)
-levels(nh11_ear)
+levels(nh11_ear$everwrk)
 # There are NAs
 # Remove the records with NAs
 cleanedup_nh11_ear <- na.omit(nh11_ear)
-levels(cleaned_up_nh11_ear$everwrk)
+levels(cleanedup_nh11_ear$everwrk)
 
 # Summarize
 # everwrk          age_p                                  r_maritl   
